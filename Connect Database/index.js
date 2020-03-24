@@ -4,8 +4,10 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json({ extended: false }));
+//or
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/api/userModel", require("./Api/User"));
 
