@@ -27,6 +27,7 @@ const con = mysql.createConnection({
 //     });
 //   });
 
+//? insert data to database
 // con.connect(function(err) {
 //     if (err) throw err;
 //     console.log("Connected!");
@@ -37,6 +38,28 @@ const con = mysql.createConnection({
 //     });
 //   });
 
+//?update data in database
+con.connect(function(err){
+    if(err) throw err
+    console.log('connected!')
+    var sql = "UPDATE customers set name ='Bright' where address ='Bangsaen'"
+    con.query(sql,function(err){
+        if(err)throw err
+        console.log('Update complete')
+    })
+})
+
+//?delete data in database
+// con.connect(function(err){
+//     if(err) throw err;
+//     console.log('connected!')
+//     var sql = "DELETE FROM customers where name = 'Company Inc' "
+//     con.query(sql, function(err,result){
+//         if(err) throw err
+//         console.log('Delete complete')
+//     })
+// })
+
 //------------------------------------------------
 // con.connect(function(err) {
 //     if (err) throw err;
@@ -46,16 +69,26 @@ const con = mysql.createConnection({
 //       res
 //     });
 //   });
+
+
+
+//?create connection
+// con.connect(function(err){
+//     if (err) throw err 
+//         console.log('connected!')
+// })
  
-con.connect()
-app.get('/users',(req,res) => {
-    let sql = 'SELECT * FROM customers'
-    let query = con.query(sql,(err,results)=>{
-        if(err) throw err 
-        console.log(results)
-        res.json(results)
-    })
-})
-app.listen('3000', ()=>{
-    console.log('start port 3000')
-})
+//? show on web application
+// con.connect()
+// app.get('/users',(req,res) => {
+//     let sql = 'SELECT * FROM customers'
+//     let query = con.query(sql,(err,results)=>{
+//         if(err) throw err 
+//         console.log(results)
+//         res.json(results)
+//     })
+// })
+// app.listen('3000', ()=>{
+//     console.log('start port 3000')
+// })
+
