@@ -2,7 +2,7 @@ version: "3"
 
 services:
     frontend:
-        build: ./client
+        build: ./frontend
         ports: 
             - "3000:3000"
 
