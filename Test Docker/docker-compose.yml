@@ -16,4 +16,4 @@ services:
         volumes: 
             - "./nginx:/etc/nginx/conf.d"
         ports: 
-            - "9999:80"
+            - "80:80"
