@@ -22,7 +22,7 @@ class Register extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const user = {
+    const newUser = {
       fName: this.state.fName,
       lName: this.state.lName,
       username: this.state.username,
@@ -31,10 +31,8 @@ class Register extends Component {
       enterpriseId: this.state.enterpriseId,
     };
 
-    register(user).then((res) => {
-      if (res) {
-        this.props.history.push("/login");
-      }
+    register(newUser).then((res) => {
+      this.props.history.push(`/login`);
     });
   }
 
