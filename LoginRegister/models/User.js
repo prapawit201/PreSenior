@@ -1,11 +1,12 @@
 const Sequelize = require("sequelize");
 const db = require("../database/db");
 
-module.exports = db.sequelize.define(
+const Account = db.define(
   "Account",
   {
     accountId: {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
+      allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
@@ -36,6 +37,7 @@ module.exports = db.sequelize.define(
     // },
   },
   {
-    timestamps: false,
+    freezeTableName: true,
   }
 );
+module.exports = Account;

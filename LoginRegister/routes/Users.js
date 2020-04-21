@@ -7,7 +7,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/User");
 users.use(cors());
 
-process.env.SECRET_KEY = "secret";
+// process.env.SECRET_KEY = "secret";
 
 users.post("/register", (req, res) => {
   const today = new Date();
