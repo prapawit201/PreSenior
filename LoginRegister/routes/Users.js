@@ -23,9 +23,10 @@ users.post("/register", (req, res) => {
   };
   User.findOne({
     where: {
-      fName: req.body.fName,
+      username: req.body.username,
     },
   })
+
     .then((user) => {
       if (!user) {
         bcrypt.hash(req.body.password, 10, (err, hash) => {
@@ -47,7 +48,7 @@ users.post("/register", (req, res) => {
     });
 });
 
-users.post("/login", (res, req) => {
+users.post("/login", (req, res) => {
   User.findOne({
     where: {
       username: req.body.username,
@@ -62,7 +63,7 @@ users.post("/login", (res, req) => {
           res.send(token);
         }
       } else {
-        res.status(400).json({ error: " User does not exist" });
+        res.status(400).json({ error: "User does not exist" });
       }
     })
     .catch((err) => {
