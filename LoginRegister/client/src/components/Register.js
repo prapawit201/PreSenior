@@ -8,6 +8,7 @@ class Register extends Component {
       fName: "",
       lName: "",
       username: "",
+      position: "",
       password: "",
       errors: {},
     };
@@ -88,12 +89,12 @@ class Register extends Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="position">position</label>
+                <label htmlFor="position">Position</label>
                 <input
                   type="position"
                   className="form-control"
-                  name="password"
-                  placeholder="Enter position"
+                  name="position"
+                  placeholder="Enter Position"
                   value={this.state.position}
                   onChange={this.onChange}
                 />

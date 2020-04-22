@@ -14,7 +14,7 @@ const Users = require("./routes/Users");
 app.use("/users", Users);
 
 db.sync({
-  force: false,
+  force: true,
 }).then(() => {
   app.listen(port, () => {
     console.log("Carlytic Provider started at http://localhost:" + port);
