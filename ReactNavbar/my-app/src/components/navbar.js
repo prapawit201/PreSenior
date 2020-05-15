@@ -49,6 +49,7 @@ class navbar extends Component {
           <NavbarText>Simple Text</NavbarText>
           {/* </Collapse> */}
         </Navbar>
+        {/* //test */}
       </div>
     );
   }
