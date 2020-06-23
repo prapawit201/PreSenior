@@ -1,16 +1,29 @@
 var Employee = require("../models/account");
 var sequelize = require("../models/mysql");
 
-const controller = {};
+const controllers = {};
+sequelize.sync();
 
 Employee.create({
-  fName: "Babe",
-  lName: "Ppt",
-  username: " test",
-  password: "test",
-  position: "Admin",
-  enterpriseId: "123",
+  fName: "test1",
+  lName: "test1",
+  username: " test1",
+  password: "test1",
+  position: "Staff",
+  enterpriseId: "234",
 });
+
+controllers.list = async (req, res) => {
+  const data = await Employee.findAll()
+    .then(function (data) {
+      return data;
+    })
+    .catch((error) => {
+      return error;
+    });
+
+  res.json({ success: true, data: data });
+};
 
 controllers.testdata = async (req, res) => {
   const response = await sequelize
@@ -25,20 +38,4 @@ controllers.testdata = async (req, res) => {
   res.json(response);
 };
 
-controllers.list = async (req, res) => {
-  const data = await Employee.findAll();
-  res.json(data);
-};
-
-controller.test = (req, res) => {
-  const data = {
-    name: "Jhon Smith",
-    age: 20,
-    city: "London",
-  };
-
-  console.log("Send data from controller employee");
-  res.json(data);
-};
-
-module.exports = controller;
+module.exports = controllers;

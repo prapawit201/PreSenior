@@ -1,9 +1,49 @@
 import React from "react";
-
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
 class listComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      listEmployee: [],
+    };
+  }
+  componentDidMount() {
+    axios
+      .get("http://localhost:5000/employee/list")
+      .then((res) => {
+        const data = res.data.data;
+        this.setState({ listEmployee: data });
+      })
+      .catch((error) => {
+        alert(error);
+      });
+    {
+      this.loadFillData();
+    }
+  }
+  loadFillData() {
+    return this.state.listEmployee.map((data) => {
+      return (
+        <tr>
+          <th>{data.id}</th>
+          <td>{data.role.role}</td>
+          <td>{data.name}</td>
+          <td>{data.email}</td>
+          <td>{data.address}</td>
+          <td>{data.phone}</td>
+          <td>
+            <button class="btn btn-outline-info "> Edit </button>
+          </td>
+          <td>
+            <button class="btn btn-outline-danger "> Delete </button>
+          </td>
+        </tr>
+      );
+    });
+  }
   render() {
     return (
       <table class="table table-hover table-striped">
@@ -33,9 +73,30 @@ class listComponent extends React.Component {
               <button class="btn btn-outline-danger "> Delete </button>
             </td>
           </tr>
+          {this.loadFillData()}
         </tbody>
       </table>
     );
+  }
+  loadFillData() {
+    return this.state.listEmployee.map((data) => {
+      return (
+        <tr>
+          <th>{data.accountId}</th>
+          <td>{data.fName}</td>
+          <td>{data.lName}</td>
+          <td>{data.username}</td>
+          <td>{data.position}</td>
+          <td>{data.enterpriseId}</td>
+          <td>
+            <button class="btn btn-outline-info "> Edit </button>
+          </td>
+          <td>
+            <button class="btn btn-outline-danger "> Delete </button>
+          </td>
+        </tr>
+      );
+    });
   }
 }
 

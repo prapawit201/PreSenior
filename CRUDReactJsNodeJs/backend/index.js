@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 // importing routes
 const employeeRouters = require("./routes/employeeRoute");
@@ -8,6 +9,9 @@ app.set("port", process.env.PORT || 5000);
 
 //Middlewares
 app.use(express.json());
+
+// Configurar cabeceras y cors
+app.use(cors());
 
 //Route
 app.use("/employee", employeeRouters);
