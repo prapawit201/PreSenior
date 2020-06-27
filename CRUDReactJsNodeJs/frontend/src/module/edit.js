@@ -94,12 +94,41 @@ class EditComponent extends React.Component {
             />
           </div>
         </div>
-
-        <button type="submit" class="btn btn-primary">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          onClick={() => this.sendUpdate()}
+        >
           Update
         </button>
       </div>
     );
+  }
+  sendUpdate() {
+    //  get parameter id
+    let userId = this.props.match.params.accountId;
+    // url de backend
+    const baseUrl = "http://localhost:5000/employee/update/" + userId;
+    // parametros de datos post
+    const datapost = {
+      fName: this.state.fName,
+      lName: this.state.lName,
+      username: this.state.username,
+      position: this.state.position,
+    };
+
+    axios
+      .post(baseUrl, datapost)
+      .then((response) => {
+        if (response.data.success === true) {
+          alert(response.data.message);
+        } else {
+          alert("Error");
+        }
+      })
+      .catch((error) => {
+        alert("Error 34 " + error);
+      });
   }
 }
 

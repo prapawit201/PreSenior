@@ -4,6 +4,32 @@ var sequelize = require("../models/mysql");
 const controllers = {};
 sequelize.sync();
 
+controllers.update = async (req, res) => {
+  // parameter get id
+  const { accountId } = req.params;
+  // parameter POST
+  const { fName, lName, username, position } = req.body;
+  // Update data
+  const data = await Employee.update(
+    {
+      fName: fName,
+      lName: lName,
+      username: username,
+      position: position,
+    },
+    {
+      where: { accountId: accountId },
+    }
+  )
+    .then(function (data) {
+      return data;
+    })
+    .catch((error) => {
+      return error;
+    });
+  res.json({ success: true, data: data, message: "Updated successful" });
+};
+
 controllers.get = async (req, res) => {
   const { accountId } = req.params;
   const data = await Employee.findAll({
