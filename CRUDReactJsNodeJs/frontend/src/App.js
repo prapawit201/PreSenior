@@ -50,7 +50,7 @@ function App() {
             {" "}
             <Route path="/" exact component={List} />
             <Route path="/form" component={Form} />
-            <Route path="/edit/:employeeId" component={Edit} />
+            <Route path="/edit/:accountId" component={Edit} />
           </div>
         </div>
       </div>

@@ -4,6 +4,20 @@ var sequelize = require("../models/mysql");
 const controllers = {};
 sequelize.sync();
 
+controllers.get = async (req, res) => {
+  const { accountId } = req.params;
+  const data = await Employee.findAll({
+    where: { accountId: accountId },
+  })
+    .then(function (data) {
+      return data;
+    })
+    .catch((error) => {
+      return error;
+    });
+  res.json({ success: true, data: data });
+};
+
 controllers.create = async (req, res) => {
   // data
   const { fName, lName, username, password, position, enterpriseId } = req.body;
