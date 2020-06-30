@@ -4,6 +4,16 @@ var sequelize = require("../models/mysql");
 const controllers = {};
 sequelize.sync();
 
+controllers.delete = async (req, res) => {
+  // parameter post
+  const { accountId } = req.body;
+  // delete sequelize
+  const del = await Employee.destroy({
+    where: { accountId: accountId },
+  });
+  res.json({ success: true, deleted: del, message: "Deleted successful" });
+};
+
 controllers.update = async (req, res) => {
   // parameter get id
   const { accountId } = req.params;
