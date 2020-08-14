@@ -143,7 +143,7 @@ class EditComponent extends React.Component {
           }
         })
         .catch((error) => {
-          alert("Error 34 " + error);
+          alert("Error 304 " + error);
         });
     }
   }
