@@ -2,6 +2,13 @@ const express = require("express");
 const multer = require("multer");
 const app = express();
 const url = require("url");
+const path = require("path");
+const ImageRoute = require("./routes/ImageRoute");
+
+const db = require("./database/Db");
+
+app.use(express.static(path.join(__dirname, "./uploads")));
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -12,14 +19,26 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 app.get("/", (req, res) => {
+  console.log(req.get("host"));
+  
   res.send("Hello Upload");
 });
-app.post("/upload", upload.single("file"), (req, res) => {
+app.post("/upload", upload.single("myImage"), ImageRoute, (req, res) => {
   let path = url;
-  console.log(res);
-  console.log(req.file.filename);
-  res.send(req.file);
 });
-app.listen(8001, () => {
-  console.log("service running at PORT: 8001");
-});
+
+app.use(ImageRoute);
+const PORT = process.env.PORT || 8001;
+db.sync({
+  force: false,
+})
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log("Carlytic Provider started at http://localhost:" + PORT);
+    });
+  })
+  .catch(() => {
+    app.listen(PORT, () => {
+      console.log("Carlytic Production started at http://localhost:" + PORT);
+    });
+  });

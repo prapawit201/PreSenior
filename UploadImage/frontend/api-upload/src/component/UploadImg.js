@@ -1,29 +1,51 @@
 import React, { useState } from "react";
-const UploadImg = () => {
-  const [file, setFile] = useState({});
-  const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
-  const handleUploadImage = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setFile(file);
-      setImagePreviewUrl(reader.result);
+import file from "file";
+import axios from "axios";
+
+class UploadImg extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      file: null,
     };
-    reader.readAsDataURL(file);
-  };
-  return (
-    <React.Fragment>
-      <img
-        src={
-          imagePreviewUrl
-            ? imagePreviewUrl
-            : "https://dcvta86296.i.lithium.com/t5/image/serverpage/image-  id/14321i0011CCD2E7F3C8F8/image-size/large?v=1.0&px=999"
-        }
-        style={{ width: "500px", height: "500px" }}
-      />
-      <input type="file" onChange={handleUploadImage} />
-      <button> Upload </button>
-    </React.Fragment>
-  );
-};
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+  }
+  onFormSubmit(e) {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("myImage", this.state.file);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    axios
+      .post("http://localhost:8001/upload", formData, config)
+      .then((response) => {
+        alert("The file is successfully uploaded");
+      })
+      .catch((error) => {});
+  }
+  onChange(e) {
+    this.setState({ file: e.target.files[0] });
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.onFormSubmit}>
+        <h1>File Upload</h1>
+        <img
+          src="http://localhost:8001/1597941575793.png"
+          alt="W3Schools.com"
+          width="104"
+          height="142"
+        ></img>
+        <input type="file" name="myImage" onChange={this.onChange} />
+        <button type="submit">Upload</button>
+      </form>
+    );
+  }
+}
+
 export default UploadImg;
