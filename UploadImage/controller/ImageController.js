@@ -24,4 +24,10 @@ controllers.create = async (req, res) => {
   });
 };
 
+controllers.list = async (req, res) => {
+  const data = await Image.findAll().then(function (data) {
+    return data;
+  });
+  res.json({ success: true, data: data });
+};
 module.exports = controllers;

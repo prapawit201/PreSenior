@@ -4,9 +4,10 @@ const app = express();
 const url = require("url");
 const path = require("path");
 const ImageRoute = require("./routes/ImageRoute");
+const cors = require("cors");
 
 const db = require("./database/Db");
-
+app.use(cors());
 app.use(express.static(path.join(__dirname, "./uploads")));
 
 const storage = multer.diskStorage({
@@ -20,13 +21,13 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 app.get("/", (req, res) => {
   console.log(req.get("host"));
-  
+
   res.send("Hello Upload");
 });
+
 app.post("/upload", upload.single("myImage"), ImageRoute, (req, res) => {
   let path = url;
 });
-
 app.use(ImageRoute);
 const PORT = process.env.PORT || 8001;
 db.sync({

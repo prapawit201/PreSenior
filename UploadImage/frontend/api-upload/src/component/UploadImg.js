@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import file from "file";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
 class UploadImg extends React.Component {
   constructor(props) {
     super(props);
@@ -33,17 +33,17 @@ class UploadImg extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.onFormSubmit}>
-        <h1>File Upload</h1>
-        <img
-          src="http://localhost:8001/1597941575793.png"
-          alt="W3Schools.com"
-          width="104"
-          height="142"
-        ></img>
-        <input type="file" name="myImage" onChange={this.onChange} />
-        <button type="submit">Upload</button>
-      </form>
+      <div>
+        <form onSubmit={this.onFormSubmit}>
+          <h1>File Upload</h1>
+
+          <input type="file" name="myImage" onChange={this.onChange} />
+          <button type="submit">Upload</button>
+        </form>
+        <Link class="btn btn-outline-secondary" to="/list">
+          Show
+        </Link>
+      </div>
     );
   }
 }
