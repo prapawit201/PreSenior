@@ -5,6 +5,7 @@ const url = require("url");
 const path = require("path");
 const ImageRoute = require("./routes/ImageRoute");
 const cors = require("cors");
+const sharp = require("sharp");
 
 const db = require("./database/Db");
 app.use(cors());
