@@ -21,14 +21,15 @@ MongoClient.connect(
     });
 
     app.get("/data", function (req, res, next) {
-      console.log("object");
-      console.log(req.body);
+      // console.log(req.body);
 
-      db.collection("dataIOT2")
-        .find()
+      db.collection("userTest")
+        .find({})
         .toArray((err, result) => {
-          if (err) return res.status(500).send(err.toString());
-
+          if (err) throw err;
+          // console.log(result);
+          console.log(result[1].lName);
+          // console.log(req.body);
           res.status(200).send(result);
         });
     });
