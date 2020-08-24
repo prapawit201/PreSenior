@@ -2,8 +2,11 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
-var MongoClient = require("mongodb").MongoClient;
-
+let MongoClient = require("mongodb").MongoClient;
+let sequelize = require("./database/Db");
+const MySQL = require("./routes/MySQL");
+let Incident = require("./model/Incident");
+let Logged = require("./model/LoggedTest");
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,17 +24,46 @@ MongoClient.connect(
     });
 
     app.get("/data", function (req, res, next) {
-      // console.log(req.body);
-
       db.collection("userTest")
         .find({})
         .toArray((err, result) => {
           if (err) throw err;
-          // console.log(result);
-          console.log(result[1].lName);
+          // console.log(req.body);
+          // console.log(result[1].lName);
           // console.log(req.body);
           res.status(200).send(result);
         });
+    });
+
+    app.post("/fetchData", async (req, res) => {
+      try {
+        // Fetch Rules
+        const rules = await Incident.findOne({
+          where: {
+            incidentName: "test1",
+          },
+        });
+
+        // console.log("rules = ", rules);
+
+        console.log(req.body.fName);
+
+        // console.log("test : " + req.body.fName);
+        // Check eml or speed === rules ?
+        if (req.body.fName == rules.incidentName) {
+          const logged = await Logged.create({
+            fName: req.body.fName,
+            lName: req.body.lName,
+          });
+          if (!logged) {
+            res.send("error cannot create logged");
+          }
+        }
+        // console.log(req.body);
+        res.send("ok");
+      } catch (e) {
+        res.send("error");
+      }
     });
 
     app.listen(PORT, (req, res) => {

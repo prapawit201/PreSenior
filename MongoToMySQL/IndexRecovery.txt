@@ -1,0 +1,88 @@
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const bodyParser = require("body-parser");
+var MongoClient = require("mongodb").MongoClient;
+var sequelize = require("./database/Db");
+const MySQL = require("./routes/MySQL");
+var Incident = require("./model/Incident");
+var Logged = require("./model/LoggedTest");
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+const PORT = 5000;
+
+MongoClient.connect(
+  "mongodb+srv://seniorobd2:seniorobd2@seniorproject-f0o8e.mongodb.net/test?retryWrites=true&w=majority",
+  (error, client) => {
+    if (error) throw error;
+    var db = client.db("test");
+
+    app.get("/", (req, res) => {
+      res.send("Hello World, Carlytic Test");
+    });
+
+    app.get("/data", function (req, res, next) {
+      db.collection("userTest")
+        .find({})
+        .toArray((err, result) => {
+          if (err) throw err;
+          // console.log(req.body);
+          // console.log(result[1].lName);
+          // console.log(req.body);
+          res.status(200).send(result);
+        });
+    });
+
+    app.get("/fetchData", async (req, res) => {
+      app.use("/api", MySQL);
+
+      db.collection("userTest")
+        .find({})
+        .toArray((err, result) => {
+          if (err) throw err;
+          // console.log(result);\
+          let result1;
+          var data = Incident.findAll({
+            where: {
+              incidentName: "test1",
+            },
+          })
+            .then(function (data) {
+              result1 = data[0].incidentName;
+              // console.log(data);
+              console.log("test : " + data[0].incidentName);
+            })
+            .catch((error) => {
+              return error;
+            });
+          console.log("Result : " + result1);
+          for (let i = 0; i < result.length; i++) {
+            // console.log(result[i]);
+            console.log("Mongo : " + result[i].fName);
+
+            if (result[i].fName == result1) {
+              Logged.create({
+                fName: result[i].fName,
+                lName: result[i].lName,
+              })
+                .then(function (data) {
+                  console.log("ok");
+                })
+                .catch((error) => {
+                  console.log("Error " + error);
+                  return error;
+                });
+            }
+          }
+
+          res.send("ok");
+        });
+    });
+
+    app.listen(PORT, (req, res) => {
+      console.log("Test PORT : " + PORT);
+    });
+  }
+);
