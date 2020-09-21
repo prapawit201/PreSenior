@@ -10,10 +10,19 @@ const LoggedTest = db.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    fName: {
+    lat: {
       type: Sequelize.STRING,
     },
-    lName: {
+    long: {
+      type: Sequelize.STRING,
+    },
+    speed: {
+      type: Sequelize.STRING,
+    },
+    RPM: {
+      type: Sequelize.STRING,
+    },
+    time: {
       type: Sequelize.STRING,
     },
   },

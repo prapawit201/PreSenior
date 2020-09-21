@@ -37,16 +37,19 @@ MongoClient.connect(
         // Fetch Rules
         const rules = await Incident.findOne({
           where: {
-            incidentName: "8",
+            incidentName: "RPM",
           },
         }).then((rule) => {
           return rule;
         });
 
-        if (req.body.v === rules.incidentName) {
+        if (req.body.v >= rules.incidentValue) {
           const logged = await Logged.create({
-            fName: req.body.v,
-            lName: req.body.time,
+            lat: req.body.kff1006,
+            long: req.body.kff1005,
+            // speed: req.body.kff1006,
+            // RPM: req.body.kff1005,
+            time: req.body.time,
           });
           if (!logged) {
             res.send("error cannot create logged");
