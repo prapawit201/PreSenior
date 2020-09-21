@@ -11,16 +11,16 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const PORT = 5000;
+// const PORT = 5678;
 
 MongoClient.connect(
-  "mongodb+srv://seniorobd2:seniorobd2@seniorproject-f0o8e.mongodb.net/test?retryWrites=true&w=majority",
+  "mongodb+srv://seniorobd2:seniorobd2@seniorproject.f0o8e.mongodb.net/test?retryWrites=true&w=majority",
   (error, client) => {
     if (error) throw error;
     var db = client.db("test");
 
     app.get("/", (req, res) => {
-      res.send("Hello World, Carlytic Test");
+      res.send("Hello World, Carlytic MongoToReact1");
     });
 
     app.get("/data", function (req, res, next) {
@@ -28,9 +28,6 @@ MongoClient.connect(
         .find({})
         .toArray((err, result) => {
           if (err) throw err;
-          // console.log(req.body);
-          // console.log(result[1].lName);
-          // console.log(req.body);
           res.status(200).send(result);
         });
     });
@@ -40,34 +37,35 @@ MongoClient.connect(
         // Fetch Rules
         const rules = await Incident.findOne({
           where: {
-            incidentName: "test1",
+            incidentName: "8",
           },
+        }).then((rule) => {
+          return rule;
         });
 
-        // console.log("rules = ", rules);
-
-        console.log(req.body.fName);
-
-        // console.log("test : " + req.body.fName);
-        // Check eml or speed === rules ?
-        if (req.body.fName == rules.incidentName) {
+        if (req.body.v === rules.incidentName) {
           const logged = await Logged.create({
-            fName: req.body.fName,
-            lName: req.body.lName,
+            fName: req.body.v,
+            lName: req.body.time,
           });
           if (!logged) {
             res.send("error cannot create logged");
           }
+        } else if (req.body.v != rules.incidentName) {
+          console.log("Error cannot Created");
         }
-        // console.log(req.body);
-        res.send("ok");
+
+        console.log(req.body);
+        res.send("ok record Logged");
       } catch (e) {
+        console.log(e);
         res.send("error");
       }
     });
 
-    app.listen(PORT, (req, res) => {
-      console.log("Test PORT : " + PORT);
+    const PORT = process.env.PORT || 5556;
+    app.listen(PORT, () => {
+      console.log("server started : " + PORT);
     });
   }
 );
