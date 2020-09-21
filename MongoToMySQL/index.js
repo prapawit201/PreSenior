@@ -51,6 +51,7 @@ MongoClient.connect(
             // RPM: req.body.kff1005,
             time: req.body.time,
           });
+          // console.log(req.body);
           if (!logged) {
             res.send("error cannot create logged");
           }
